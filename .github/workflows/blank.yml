@@ -1,0 +1,30 @@
+name: CICD
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Select environment to deploy'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - test
+
+jobs:
+  build-dev:
+    if: ${{ github.event.inputs.env == 'dev' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Echo for dev
+        run: echo Hello, dev-world!
+
+  build-test:
+    if: ${{ github.event.inputs.env == 'test' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Echo for test
+        run: echo Hello, test-world!
